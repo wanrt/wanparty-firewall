@@ -1,0 +1,73 @@
+##
+#ACTION		SOURCE		DEST		PROTO	DEST	SOURCE		ORIGINAL	RATE		USER/	MARK	CONNLIMIT	TIME		HEADERS		SWITCH		HELPER
+#							PORT	PORT(S)		DEST		LIMIT		GROUP
+?SECTION ALL
+?SECTION ESTABLISHED
+?SECTION RELATED
+?SECTION INVALID
+?SECTION UNTRACKED
+?SECTION NEW
+
+#       Don't allow connection pickup from the net
+#
+Invalid(DROP)	net		all		tcp
+
+# accept all from server to internet
+ACCEPT			$FW		net
+SSH(ACCEPT)     $FW             net
+
+# accept ssh access from extern but log it 
+SSH(ACCEPT):info:externssh     net             $FW
+
+
+# accept all between server and vpn
+ACCEPT		vpn		$FW
+ACCEPT		$FW		vpn
+
+
+
+# if auth accept all to internet and log it
+ACCEPT:info:web	web		net
+ACCEPT:info:web	web		vpn
+ACCEPT:info:web	web		$FW
+
+
+# open essential ports even not auth and log it
+# web (this will be redirected to the $FW internal server)
+HTTPS(ACCEPT):info:auth 	loc	$FW 	
+HTTP(ACCEPT):info:auth		loc	$FW		
+HTTPS(ACCEPT):info:auth 	loc	vpn 	
+HTTP(ACCEPT):info:auth		loc	vpn		
+DNS(ACCEPT):info:dns		loc	$FW		
+
+# ntp
+NTP(ACCEPT)	loc		net
+
+# Allow full access from the local to vpn 
+ACCEPT:info:vpn			loc		vpn
+# ACCEPT:info:local		loc		$FW
+
+# redirect traffic from loc to the server
+DNAT	loc	$FW:10.$DEPT.0.1:8080		tcp	80
+DNAT	loc	$FW:10.$DEPT.0.1:8443		tcp	443
+
+# Drop Ping from the "bad" net zone.
+Ping(DROP)   	net             $FW
+HTTP(DROP)   	net             $FW
+HTTPS(DROP)   	net             $FW 
+
+# accept Ping from friends 
+
+# Ping(ACCEPT)    vpn             $FW # this is already covered 
+Ping(ACCEPT)	vpn		loc
+# ACCEPT		$FW		net		icmp
+ACCEPT		$FW		loc		icmp
+ACCEPT		$FW		vpn		icmp
+
+# Allow ldap and ldaps
+LDAP(ACCEPT)		$FW		vpn	
+LDAPS(ACCEPT)		$FW		vpn
+
+LDAP(ACCEPT)		vpn		$FW
+LDAPS(ACCEPT)		vpn		$FW
+#LAST LINE -- ADD YOUR ENTRIES BEFORE THIS ONE -- DO NOT REMOVE

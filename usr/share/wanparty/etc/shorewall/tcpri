@@ -1,0 +1,8 @@
+#BAND         PROTO         PORT(S)         ADDRESS             INTERFACE        HELPER
+#2               -             -                -                $LAN_IF                
+#1				-			  -				   -				$TUN_IF    # extra priority for vpn traffic 
+#1			  udp	   		53											   # and for dns
+#2			  icmp	        8
+#2			  udp			27000–27015		   -				-  # priority for valve games
+#2			  tcp			27015		   	   -				-  # priority for valve games
+#3			  udp           27015–27030	   	   -				-  # low priority to log into Steam and download content

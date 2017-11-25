@@ -1,0 +1,4 @@
+#INTERFACE             TYPE          IN-BANDWIDTH        OUT-BANDWIDTH
+#$NET_IF                External
+#$LAN_IF                Internal
+#$TUN_IF                Internal

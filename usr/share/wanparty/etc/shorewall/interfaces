@@ -1,0 +1,7 @@
+################################################
+?FORMAT 2
+################################################
+#ZONE	INTERFACE	OPTIONS
+net     $NET_IF            tcpflags,dhcp,nosmurfs,routefilter,logmartians,sourceroute=0
+loc     $LAN_IF            dhcp,tcpflags,nosmurfs,routefilter,logmartians
+vpn     $TUN_IF            dhcp,tcpflags,nosmurfs,routefilter,logmartians

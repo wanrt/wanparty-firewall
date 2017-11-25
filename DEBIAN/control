@@ -1,0 +1,10 @@
+Source: wanparty-firewall
+Section: unknown
+Priority: extra
+Maintainer: Sohaib Lafifi <sohaib.lafifi@univ-artois.fr>
+Homepage: wanparty.neticien.net
+Package: wanparty-firewall
+Version: 1.11.14
+Architecture: all
+Depends: iptables-persistent, shorewall, ipset, xtables-addons-common, wanparty-base, wanparty-network-config, wanparty-vpn-client
+Description: configuration du pare-feu du serveur locale de la wan

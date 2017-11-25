@@ -1,0 +1,12 @@
+#
+#------------------------------------------------------------------------------
+# For information about entries in this file, type "man shorewall-policy"
+###############################################################################
+#SOURCE		DEST		POLICY		LOG LEVEL	LIMIT:BURST
+$FW 		net 		ACCEPT
+web		net		ACCEPT		 
+loc		net		REJECT
+vpn		net		REJECT		 
+net		all		DROP		 
+# THE FOLLOWING POLICY MUST BE LAST
+all		all		REJECT		
