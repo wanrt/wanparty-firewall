@@ -10,6 +10,7 @@ case "$1" in
     cp -vrf /usr/share/wanparty/etc/shorewall/* /etc/shorewall/
      sed -i -e "s/DEPARTEMENT/$DEPARTEMENT/g" /etc/shorewall/params
     sed -i -e "s/startup=0/startup=1/g" /etc/default/shorewall
+    touch /var/log/wanparty/firewall.log
     systemctl start rsyslog
 
     systemctl enable shorewall 
