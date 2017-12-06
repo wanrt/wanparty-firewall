@@ -14,6 +14,7 @@ case "$1" in
     systemctl start rsyslog
 
     systemctl enable shorewall 
+    shorewall update
     systemctl restart shorewall 
 
     ;;
